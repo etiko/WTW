@@ -1,3 +1,5 @@
 ﻿Add your notes here:
 # I installed boostrap and also changed to scss so i can configure accordingly. Also a preference.
 # I have a shared directory for items that are quite generic such as header, spinners.
+# I opted for cards to display items simply from a presentation point of view. A table is also good. 
+Either way for a large application, either approach could work but there would be need for server side pagination or lazy load from a performance point of view
