@@ -1,5 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 import { Policy, PolicyState } from '../models/policy.model';
 
@@ -29,6 +31,15 @@ export class PolicyService {
       next: policies => this.updateState({ policies, loadingState: 'success' }),
       error: error => this.updateState({ error: this.getErrorMessage(error, 'get policies'), loadingState: 'error' })
     });
+  }
+
+  getPolicy(policyNumber: number): Observable<Policy> {
+    return this.http.get<Policy>(`${this.baseUrl}/${policyNumber}`).pipe(
+      catchError(error => {
+        this.updateState({ error: this.getErrorMessage(error, 'get policy'), loadingState: 'error' });
+        return throwError(() => error);
+      })
+    );
   }
 
   private getErrorMessage(error: unknown, action: string): string {

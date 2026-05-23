@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .page {
     max-width: 900px;
     margin: 0 auto;
@@ -15,11 +17,11 @@
         margin: 0 0 0.25rem;
         font-size: 1.75rem;
         font-weight: 700;
-        color: #0f172a;
+        color: $color-text;
     }
 
     .page-subtitle {
         margin: 0;
-        color: #64748b;
+        color: $color-muted-light;
     }
 }

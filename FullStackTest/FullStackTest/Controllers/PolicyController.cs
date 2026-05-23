@@ -21,4 +21,13 @@ public class PolicyController : ControllerBase
     {
         return _policyRepository.Get();
     }
+
+    [HttpGet("{policyNumber}")]
+    public ActionResult<Policy> GetByPolicyNumber(int policyNumber)
+    {
+        var policy = _policyRepository.GetByPolicyNumber(policyNumber);
+        if (policy == null)
+            return NotFound();
+        return Ok(policy);
+    }
 }

@@ -13,6 +13,18 @@ export const routes: Routes = [
         .then(component => component.PolicyLandingPageComponent)
   },
   {
+    path: 'policies/createPolicy',
+    loadComponent: () =>
+      import('./features/policy/pages/policy-form-page/policy-form-page.component')
+        .then(component => component.PolicyFormPageComponent)
+  },
+  {
+    path: 'policies/editPolicy/:policyNumber',
+    loadComponent: () =>
+      import('./features/policy/pages/policy-form-page/policy-form-page.component')
+        .then(component => component.PolicyFormPageComponent)
+  },
+  {
     path: '**',
     redirectTo: 'policies'
   }
