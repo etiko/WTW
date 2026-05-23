@@ -1,0 +1,60 @@
+<div class="row align-items-start mb-4">
+  <div class="col">
+    <h1 class="page-title">Policy Administration</h1>
+    <p class="page-subtitle mb-0">Manage insurance policies and holder information</p>
+  </div>
+  <div class="col-auto">
+    <a routerLink="/policies/createPolicy" class="btn btn--primary">
+      <i class="bi bi-plus-lg"></i>
+      New Policy
+    </a>
+  </div>
+</div>
+
+@if (error(); as errorMessage) {
+<app-error-message [message]="errorMessage" class="mb-4" />
+}
+
+<div class="row g-3 mb-4" aria-label="Policy statistics">
+  <div class="col-md-3">
+    <app-stats-card label="Total Policies" [value]="totalPolicies()" />
+  </div>
+  <div class="col-md-3">
+    <app-stats-card label="Average Age" [value]="averageHolderAge()" />
+  </div>
+  <div class="col-md-3">
+    <app-stats-card label="Female Holders" [value]="femaleCount()" />
+  </div>
+  <div class="col-md-3">
+    <app-stats-card label="Male Holders" [value]="maleCount()" />
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h2 class="list-title mb-0">All Policies</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-body">
+    @if (loadingState() === 'loading') {
+    <app-loading-spinner />
+    } @else if (policies().length === 0) {
+    <app-no-result />
+    } @else {
+    <div class="row g-3" role="listbox" aria-label="Policy list">
+      @for (policy of policies(); track policy.policyNumber) {
+      <div class="col-md-4">
+        <app-policy-card 
+          [policy]="policy" 
+          [isSelected]="selectedId() === policy.policyNumber" 
+          (selectedItem)="handlePolicySelected(policy)" />
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

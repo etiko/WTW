@@ -1,0 +1,76 @@
+@use 'variables' as *;
+
+.card {
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+
+  .card-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem;
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: $color-muted;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+}
+
+.policy-card {
+  display: block;
+  padding: 1rem 1.25rem;
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-primary;
+    box-shadow: 0 4px 12px $color-primary-shadow;
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  &--selected {
+    border-color: $color-primary;
+    background: $color-primary-bg;
+  }
+
+  .holder-name {
+    margin: 0 0 0.375rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  .holder-details {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: $color-muted-light;
+
+    .separator {
+      color: $color-border-dark;
+    }
+  }
+}

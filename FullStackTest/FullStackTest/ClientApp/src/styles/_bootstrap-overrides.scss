@@ -1,0 +1,25 @@
+// Bootstrap variable overrides (moved from src/styles.scss)
+$primary: #3b82f6;
+$secondary: #334155;
+$success: #166534;
+$danger: #dc2626;
+$warning: #b45309;
+
+$body-bg: #f8fafc;
+$body-color: #0f172a;
+
+$font-family-base: Inter, sans-serif;
+$font-size-base: 1rem;
+$line-height-base: 1.5;
+
+$border-color: #e2e8f0;
+$border-radius: 0.375rem;
+$border-radius-sm: 0.25rem;
+$border-radius-lg: 0.5rem;
+
+$input-border-color: #e2e8f0;
+$input-focus-border-color: #3b82f6;
+$input-focus-box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+
+$card-border-color: #e2e8f0;
+$card-cap-bg: transparent;

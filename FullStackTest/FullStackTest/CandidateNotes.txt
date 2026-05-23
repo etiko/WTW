@@ -1,1 +1,3 @@
 ﻿Add your notes here:
+# I installed boostrap and also changed to scss so i can configure accordingly. Also a preference.
+# I have a shared directory for items that are quite generic such as header, spinners.

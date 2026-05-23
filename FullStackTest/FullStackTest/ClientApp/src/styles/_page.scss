@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+.page-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: $color-text;
+}
+
+.page-subtitle {
+  margin: 0;
+  color: $color-muted;
+}
+
+.list-title {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: $color-text;
+}

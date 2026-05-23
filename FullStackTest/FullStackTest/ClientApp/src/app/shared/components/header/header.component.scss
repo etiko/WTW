@@ -1,0 +1,74 @@
+@use 'bootstrap/scss/functions' as *;
+@use 'sass:color' as color;
+@use '../../../../styles/variables' as vars;
+
+.header {
+    background: linear-gradient(135deg, color.adjust(vars.$color-text, $lightness: -14%), vars.$color-text);
+    border-bottom: 1px solid rgba(vars.$color-white, 0.1);
+
+    .brand {
+        display: inline-flex;
+        align-items: center;
+        color: vars.$color-white;
+        text-decoration: none;
+        font-size: 1.25rem;
+        font-weight: 700;
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: vars.$color-primary;
+        }
+    }
+
+    .nav-menu {
+        display: flex;
+        gap: 0.25rem;
+    }
+
+    .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.5rem 1rem;
+        color: vars.$color-white;
+        text-decoration: none;
+        font-size: 0.75rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: color 0.15s ease, background 0.15s ease;
+
+        i {
+            font-size: 1.25rem;
+        }
+
+        &:hover {
+            color: vars.$color-white;
+            background: rgba(vars.$color-white, 0.05);
+        }
+
+        &.active {
+            color: vars.$color-primary;
+            background: rgba(vars.$color-primary, 0.1);
+        }
+    }
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .nav-item span {
+        display: none;
+    }
+
+    .nav-item {
+        padding: 0.75rem;
+    }
+
+    .nav-item i {
+        font-size: 1.5rem;
+    }
+}
