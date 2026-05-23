@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "~19.1.6",
     "@angular/platform-server": "~19.1.6",
     "@angular/router": "~19.1.6",
+    "bootstrap": "5.3",
+    "bootstrap-icons": "^1.13.1",
     "run-script-os": "^1.1.6",
     "rxjs": "~6.6.0",
     "tslib": "^2.1.0",
