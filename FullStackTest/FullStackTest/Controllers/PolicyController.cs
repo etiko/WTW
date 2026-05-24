@@ -15,7 +15,6 @@ public class PolicyController : ControllerBase
     }
 
 
-    //TODO add methods to get/create/update/delete data from _repository
     [HttpGet]
     public IEnumerable<Policy> Get()
     {
@@ -29,5 +28,39 @@ public class PolicyController : ControllerBase
         if (policy == null)
             return NotFound();
         return Ok(policy);
+    }
+
+    [HttpPost]
+    public ActionResult<Policy> Create([FromBody] Policy policy)
+    {
+        if (_policyRepository.GetByPolicyNumber(policy.PolicyNumber) != null)
+            return Conflict($"A policy with number {policy.PolicyNumber} already exists.");
+
+        _policyRepository.Add(policy);
+
+        return CreatedAtAction(nameof(GetByPolicyNumber), new { policyNumber = policy.PolicyNumber }, policy);
+    }
+
+    [HttpPut("{policyNumber}")]
+    public ActionResult<Policy> Update(int policyNumber, [FromBody] Policy policy)
+    {
+        if (_policyRepository.GetByPolicyNumber(policyNumber) == null)
+            return NotFound();
+
+        policy.PolicyNumber = policyNumber;
+        _policyRepository.Update(policy);
+
+        return Ok(policy);
+    }
+
+    [HttpDelete("{policyNumber}")]
+    public ActionResult Delete(int policyNumber)
+    {
+        if (_policyRepository.GetByPolicyNumber(policyNumber) == null)
+            return NotFound();
+
+        _policyRepository.Remove(policyNumber);
+
+        return NoContent();
     }
 }

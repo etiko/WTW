@@ -1,14 +1,24 @@
 import { PolicyFormData } from "../models/form-policy.model";
-import { Gender } from "../models/gender.model";
 import { Policy } from "../models/policy.model";
 
-export function mapPolicyToFormData(formValue: Policy): PolicyFormData {
+export function mapPolicyToFormData(policy: Policy): PolicyFormData {
     return {
-        policyNumber: formValue.policyNumber,
+        policyNumber: policy.policyNumber,
         policyHolder: {
-            name: formValue.policyHolder.name,
-            age: formValue.policyHolder.age,
-            gender: formValue.policyHolder.gender
+            name: policy.policyHolder.name,
+            age: policy.policyHolder.age,
+            gender: policy.policyHolder.gender
+        }
+    };
+}
+
+export function mapFormDataToPolicy(formData: PolicyFormData, policyNumber: number): Policy {
+    return {
+        policyNumber,
+        policyHolder: {
+            name: formData.policyHolder.name,
+            age: formData.policyHolder.age!,
+            gender: formData.policyHolder.gender!
         }
     };
 }

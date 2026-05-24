@@ -10,3 +10,15 @@ export interface PolicyHolderFormData {
   age: number | null;
   gender: Gender | null;
 }
+
+export const FORM_MODES = {
+  CREATE: 'create',
+  EDIT: 'edit',
+} as const;
+
+export type FormMode = typeof FORM_MODES[keyof typeof FORM_MODES];
+
+export interface Feedback {
+  type: 'success' | 'error';
+  message: string;
+}

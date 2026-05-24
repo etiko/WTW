@@ -1,5 +1,9 @@
 ﻿Add your notes here:
-# I installed boostrap and also changed to scss so i can configure accordingly. Also a preference.
-# I have a shared directory for items that are quite generic such as header, spinners.
-# I opted for cards to display items simply from a presentation point of view. A table is also good. 
-Either way for a large application, either approach could work but there would be need for server side pagination or lazy load from a performance point of view
+
+- I installed Bootstrap and migrated the application styling to SCSS so the styles can be configured and extended more easily. This is also my preferred styling approach.
+- I created a shared directory for generic, reusable items such as the header and loading spinner, error messsage, no result component.
+- I chose to display policies using cards for a cleaner and simpler presentation. A table would also be a valid option, especially where users need to compare records quickly.
+- In a larger application, either cards or tables could work depending on the use case. However, from a performance perspective, the application would need server-side pagination, lazy loading, or virtual scrolling as the data volume grows.
+- I kept the API model separate from the form model because the form has different validation and empty-state requirements.
+- Given the time constraints and small application scope, I kept the policy form fields in a single feature-specific component to avoid unnecessary abstraction. In a larger application, reusable form controls could be extracted into shared
+ components where there is clear cross-feature reuse.

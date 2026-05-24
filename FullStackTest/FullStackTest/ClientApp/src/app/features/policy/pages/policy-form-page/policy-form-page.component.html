@@ -10,6 +10,18 @@
         </a>
     </div>
 </div>
+
+@if (feedback(); as fb) {
+<div
+    class="alert"
+    [class.alert-success]="fb.type === 'success'"
+    [class.alert-danger]="fb.type === 'error'"
+    role="status"
+    aria-live="polite">
+    {{ fb.message }}
+</div>
+}
+
 @if (loading()) {
 <app-loading-spinner />
 } @else if (notFound()) {
@@ -24,6 +36,6 @@
     [disabled]="policyService.submitting()"
     (formSubmit)="handleSubmit($event)"
     (formReset)="handleReset()"
-    (deleteClick)="handleDelete()" />
+    (formDelete)="handleDelete()" />
 }
 

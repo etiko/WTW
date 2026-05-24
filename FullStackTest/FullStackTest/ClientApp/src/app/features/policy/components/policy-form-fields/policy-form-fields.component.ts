@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 
 import { Gender, GENDER_OPTIONS } from '../../models/gender.model';
 import { PolicyFormData } from '../../models/form-policy.model';
+import { emptyPolicyFormData } from '../../mappers/policy.mapper';
 
 @Component({
   selector: 'app-policy-form-fields',
@@ -17,6 +18,7 @@ export class PolicyFormFieldsComponent implements OnInit {
   genderOptions = GENDER_OPTIONS;
   formSubmit = output<PolicyFormData>();
   formReset = output<void>();
+  formDelete = output<void>();
 
   policyForm = new FormGroup({
     policyNumber: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
@@ -45,22 +47,19 @@ export class PolicyFormFieldsComponent implements OnInit {
   onFormSubmit(): void {
     if (this.policyForm.invalid) {
       this.policyForm.markAllAsTouched();
-      return;
     }
 
     const policyFormData = this.policyForm.getRawValue();
-    this.formSubmit.emit(policyFormData as PolicyFormData);
+    this.formSubmit.emit(policyFormData);
   }
 
   onFormReset(): void {
-    this.policyForm.reset({
-      policyNumber: null,
-      policyHolder: { name: '', age: null, gender: null }
-    });
+    this.policyForm.reset(emptyPolicyFormData());
   }
 
-  // TODO: Implement onDelete method to emit an event when the delete button is clicked
   onDelete(): void {
-  
+    if (confirm('Are you sure you want to delete this policy? This action cannot be undone.')) {
+      this.formDelete.emit();
+    }
   }
 }
