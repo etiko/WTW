@@ -1,4 +1,4 @@
-import { Component, input, output , ChangeDetectionStrategy} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 import { Policy } from '../../models/policy.model';
 import { GENDER_OPTIONS } from '../../models/gender.model';
@@ -13,9 +13,9 @@ export class PolicyCardComponent {
   isSelected = input(false);
   selectedItem = output<void>();
 
-  get genderLabel() {
+  genderLabel = computed(() => {
     const gender = this.policy().policyHolder.gender;
     return GENDER_OPTIONS.find(option => option.value === gender)?.label ?? 'Unknown';
-  }
+  });
 }
 

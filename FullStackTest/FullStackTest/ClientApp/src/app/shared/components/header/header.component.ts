@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
-import { NavItem } from './models/nav-item.model';
+import { NavItem } from '../models/nav-item.model';
+
 
 @Component({
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent {
-
   navItems: NavItem[] = [
     { path: '/policies', label: 'Policies', icon: 'bi-file-earmark-text' }
   ];

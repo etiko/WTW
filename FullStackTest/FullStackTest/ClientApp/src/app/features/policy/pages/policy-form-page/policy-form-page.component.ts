@@ -72,7 +72,7 @@ export class PolicyFormPageComponent implements OnInit {
     this.policyService.deletePolicy(policyNumber).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.router.navigate(['/policies']),
-        error: () => this.feedback.set({ type: 'error', message: 'Failed to delete policy.' })
+        error: () => this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to delete policy.' })
       });
   }
 
@@ -85,8 +85,7 @@ export class PolicyFormPageComponent implements OnInit {
           this.formFields()?.onFormReset();
         },
         error: () => {
-          this.feedback.set({ type: 'error', message: 'Failed to create policy.' });
-          // TODO, consider more detailed error handling based on the error response from the API
+          this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to create policy.' });
         }
       });
   }
@@ -102,8 +101,7 @@ export class PolicyFormPageComponent implements OnInit {
           this.originalPolicy.set(updatedPolicy);
         },
         error: () => {
-          this.feedback.set({ type: 'error', message: 'Failed to update policy.' });
-          // TODO, consider a more detailed error handling based on the error response from the API
+          this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to update policy.' });
         }
       });
   }

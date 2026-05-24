@@ -1,7 +1,10 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+
+import { getApiErrorMessage } from '@shared/utils/api-error.utils';
 
 import { Policy, PolicyState } from '../models/policy.model';
 import { PolicyFormData } from '../models/form-policy.model';
@@ -25,10 +28,11 @@ export class PolicyService {
   error = computed(() => this.state().error);
   submitting = computed(() => this.state().submitting);
 
-  getPolicies(): void {
+  getPolicies(destroyRef: DestroyRef): void {
     this.updateState({ loadingState: 'loading', error: null });
 
     this.http.get<Policy[]>(this.baseUrl).pipe(
+      takeUntilDestroyed(destroyRef),
       catchError((error: unknown) => this.handleError(error, 'get policies')))
       .subscribe((policies: Policy[]) => this.updateState({ policies, loadingState: 'success' }));
   }
@@ -76,7 +80,8 @@ export class PolicyService {
   }
 
   private handleError(error: unknown, action: string): Observable<never> {
-    this.updateState({ error: `Unable to ${action}. Please try again later.`, loadingState: 'error', submitting: false });
+    const message = getApiErrorMessage(error, `Unable to ${action}. Please try again later.`);
+    this.updateState({ error: message, loadingState: 'error', submitting: false });
     return throwError(() => error);
   }
 

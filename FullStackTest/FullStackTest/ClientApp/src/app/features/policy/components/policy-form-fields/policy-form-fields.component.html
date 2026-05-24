@@ -115,7 +115,7 @@
             }
         </button>
         @if (!editing()) {
-        <button type="button" class="btn btn-secondary" (click)="onFormReset()">
+        <button type="button" class="btn btn-secondary" (click)="onFormReset()" [disabled]="policyForm.pristine">
             Reset
         </button>
         }
@@ -126,3 +126,11 @@
         }
     </div>
 </form>
+
+<app-confirm-modal
+    title="Confirm Delete"
+    message="Are you sure you want to delete this policy? This action cannot be undone."
+    confirmLabel="Delete"
+    confirmClass="btn-danger"
+    (confirmed)="confirmDelete()"
+/>

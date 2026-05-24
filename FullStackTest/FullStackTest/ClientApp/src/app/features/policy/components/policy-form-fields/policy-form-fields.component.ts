@@ -1,5 +1,8 @@
-import { ChangeDetectionStrategy, Component, input, OnInit, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Modal } from 'bootstrap';
+
+import { ConfirmModalComponent } from '@shared/components/confirm-modal/confirm-modal.component';
 
 import { Gender, GENDER_OPTIONS } from '../../models/gender.model';
 import { PolicyFormData } from '../../models/form-policy.model';
@@ -7,11 +10,11 @@ import { emptyPolicyFormData } from '../../mappers/policy.mapper';
 
 @Component({
   selector: 'app-policy-form-fields',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, ConfirmModalComponent],
   templateUrl: './policy-form-fields.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PolicyFormFieldsComponent implements OnInit {
+export class PolicyFormFieldsComponent {
   initialPolicyFormData = input<PolicyFormData | null>(null);
   editing = input(false);
   disabled = input(false);
@@ -19,6 +22,8 @@ export class PolicyFormFieldsComponent implements OnInit {
   formSubmit = output<PolicyFormData>();
   formReset = output<void>();
   formDelete = output<void>();
+
+  private deleteModal = viewChild(ConfirmModalComponent);
 
   policyForm = new FormGroup({
     policyNumber: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
@@ -29,11 +34,16 @@ export class PolicyFormFieldsComponent implements OnInit {
     })
   });
 
-  ngOnInit(): void {
-    const data = this.initialPolicyFormData();
-    if (data) {
-      this.policyForm.setValue(data, { emitEvent: false });
-    }
+  constructor() {
+    effect(() => {
+      const data = this.initialPolicyFormData();
+      if (data) {
+        this.policyForm.setValue(data, { emitEvent: false });
+      }
+      this.editing()
+        ? this.policyForm.controls.policyNumber.disable()
+        : this.policyForm.controls.policyNumber.enable();
+    });
   }
 
   get holderGroup() {
@@ -47,6 +57,7 @@ export class PolicyFormFieldsComponent implements OnInit {
   onFormSubmit(): void {
     if (this.policyForm.invalid) {
       this.policyForm.markAllAsTouched();
+      return;
     }
 
     const policyFormData = this.policyForm.getRawValue();
@@ -58,8 +69,10 @@ export class PolicyFormFieldsComponent implements OnInit {
   }
 
   onDelete(): void {
-    if (confirm('Are you sure you want to delete this policy? This action cannot be undone.')) {
-      this.formDelete.emit();
-    }
+    this.deleteModal()?.show();
+  }
+
+  confirmDelete(): void {
+    this.formDelete.emit();
   }
 }

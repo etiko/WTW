@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { ErrorMessageComponent } from '@shared/components/error-message/error-message.component';
@@ -28,6 +28,7 @@ import { Gender } from '../../models/gender.model';
 export class PolicyLandingPageComponent implements OnInit {
   private policyService = inject(PolicyService);
   private router = inject(Router);
+  private destroyRef = inject(DestroyRef);
 
   selectedId = signal<number | null>(null);
 
@@ -35,24 +36,31 @@ export class PolicyLandingPageComponent implements OnInit {
   loadingState = this.policyService.loadingState;
   error = this.policyService.error;
 
-  totalPolicies = computed(() => this.policies().length);
-  femaleCount = computed(() =>
-    this.policyService.policies().filter(p => p.policyHolder.gender === Gender.Female).length
-  );
-  maleCount = computed(() =>
-    this.policyService.policies().filter(p => p.policyHolder.gender === Gender.Male).length
-  );
-  averageHolderAge = computed(() => {
+  private stats = computed(() => {
     const policies = this.policies();
-    if (policies.length === 0) {
-      return 0;
+    let female = 0, male = 0, totalAge = 0;
+    for (const p of policies) {
+      if (p.policyHolder.gender === Gender.Female) {
+        female++;
+      }
+      else {
+        male++;
+      }
+      totalAge += p.policyHolder.age;
     }
-    const totalAge = policies.reduce((sum, policy) => sum + policy.policyHolder.age, 0);
-    return Math.round(totalAge / policies.length);
-  }); 
+    return { total: policies.length, female, male, totalAge };
+  });
+
+  totalPolicies = computed(() => this.stats().total);
+  femaleCount = computed(() => this.stats().female);
+  maleCount = computed(() => this.stats().male);
+  averageHolderAge = computed(() => {
+    const { total, totalAge } = this.stats();
+    return total === 0 ? 0 : Math.round(totalAge / total);
+  });
 
   ngOnInit(): void {
-    this.policyService.getPolicies();
+    this.policyService.getPolicies(this.destroyRef);
   }
 
   handlePolicySelected(policy: Policy): void {
