@@ -12,7 +12,7 @@
 </div>
 
 @if (error(); as errorMessage) {
-<app-error-message [message]="errorMessage" class="mb-4" />
+  <app-error-message [message]="errorMessage" class="mb-4" />
 }
 
 <div class="row g-3 mb-4" aria-label="Policy statistics">
@@ -41,20 +41,20 @@
 
   <div class="card-body">
     @if (loadingState() === 'loading') {
-    <app-loading-spinner />
+      <app-loading-spinner />
     } @else if (policies().length === 0) {
-    <app-no-result />
+      <app-no-result />
     } @else {
-    <div class="row g-3" role="listbox" aria-label="Policy list">
-      @for (policy of policies(); track policy.policyNumber) {
-      <div class="col-md-4">
-        <app-policy-card 
-          [policy]="policy" 
-          [isSelected]="selectedId() === policy.policyNumber" 
-          (selectedItem)="handlePolicySelected(policy)" />
+      <div class="row g-3" role="listbox" aria-label="Policy list">
+        @for (policy of policies(); track policy.policyNumber) {
+          <div class="col-md-4">
+            <app-policy-card
+              [policy]="policy"
+              [isSelected]="selectedId() === policy.policyNumber"
+              (selectedItem)="handlePolicySelected(policy)" />
+          </div>
+        }
       </div>
-      }
-    </div>
     }
   </div>
 </div>

@@ -1,136 +1,136 @@
 <form [formGroup]="policyForm" (ngSubmit)="onFormSubmit()">
-    <div class="mb-4">
-        <div class="mb-3">
-            <label for="policyNumber" class="form-label">Policy Number</label>
-            <input 
-                id="policyNumber" 
-                type="number" 
-                formControlName="policyNumber" 
-                class="form-control" 
-                min="1"
-                [class.is-invalid]="hasError(policyForm.controls.policyNumber)"
-                [attr.aria-invalid]="hasError(policyForm.controls.policyNumber) || null"
-                aria-describedby="policyNumber-error"
-            />
-            @if (hasError(policyForm.controls.policyNumber)) {
-            <div id="policyNumber-error" class="invalid-feedback">
-                @if (policyForm.controls.policyNumber.hasError('required')) {
-                <span>Policy Number is required.</span>
-                }
-                @if (policyForm.controls.policyNumber.hasError('min')) {
-                <span>Policy Number must be a positive integer.</span>
-                }
-            </div>
-            }
+  <div class="mb-4">
+    <div class="mb-3">
+      <label for="policyNumber" class="form-label">Policy Number</label>
+      <input
+        id="policyNumber"
+        type="number"
+        formControlName="policyNumber"
+        class="form-control"
+        min="1"
+        [class.is-invalid]="hasError(policyForm.controls.policyNumber)"
+        [attr.aria-invalid]="hasError(policyForm.controls.policyNumber) || null"
+        aria-describedby="policyNumber-error"
+      />
+      @if (hasError(policyForm.controls.policyNumber)) {
+        <div id="policyNumber-error" class="invalid-feedback">
+          @if (policyForm.controls.policyNumber.hasError('required')) {
+            <span>Policy Number is required.</span>
+          }
+          @if (policyForm.controls.policyNumber.hasError('min')) {
+            <span>Policy Number must be a positive integer.</span>
+          }
         </div>
+      }
+    </div>
+  </div>
+
+  <div class="mb-4" formGroupName="policyHolder">
+    <div class="mb-3">
+      <label for="holderName" class="form-label">Full Name</label>
+      <input
+        id="holderName"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        maxlength="100"
+        [class.is-invalid]="hasError(holderGroup.controls.name)"
+        [attr.aria-invalid]="hasError(holderGroup.controls.name) || null"
+        aria-describedby="holderName-error"
+      />
+      @if (hasError(holderGroup.controls.name)) {
+        <div id="holderName-error" class="invalid-feedback">
+          @if (holderGroup.controls.name.hasError('required')) {
+            <span>Name is required.</span>
+          }
+          @if (holderGroup.controls.name.hasError('maxlength')) {
+            <span>Name must be 100 characters or fewer.</span>
+          }
+        </div>
+      }
     </div>
 
-    <div class="mb-4" formGroupName="policyHolder">
-        <div class="mb-3">
-            <label for="holderName" class="form-label">Full Name</label>
-            <input 
-                id="holderName" 
-                type="text" 
-                formControlName="name" 
-                class="form-control" 
-                maxlength="100"
-                [class.is-invalid]="hasError(holderGroup.controls.name)"
-                [attr.aria-invalid]="hasError(holderGroup.controls.name) || null"
-                aria-describedby="holderName-error"
-            />
-            @if (hasError(holderGroup.controls.name)) {
-            <div id="holderName-error" class="invalid-feedback">
-                @if (holderGroup.controls.name.hasError('required')) {
-                <span>Name is required.</span>
-                }
-                @if (holderGroup.controls.name.hasError('maxlength')) {
-                <span>Name must be 100 characters or fewer.</span>
-                }
-            </div>
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="holderAge" class="form-label">Age</label>
+        <input
+          id="holderAge"
+          type="number"
+          formControlName="age"
+          class="form-control"
+          min="0"
+          max="120"
+          [class.is-invalid]="hasError(holderGroup.controls.age)"
+          [attr.aria-invalid]="hasError(holderGroup.controls.age) || null"
+          aria-describedby="holderAge-error"
+        />
+        @if (hasError(holderGroup.controls.age)) {
+          <div id="holderAge-error" class="invalid-feedback">
+            @if (holderGroup.controls.age.hasError('required')) {
+              <span>Age is required.</span>
             }
-        </div>
-
-        <div class="row g-3">
-            <div class="col-md-6">
-                <label for="holderAge" class="form-label">Age</label>
-                <input 
-                    id="holderAge" 
-                    type="number" 
-                    formControlName="age" 
-                    class="form-control" 
-                    min="0" 
-                    max="120"
-                    [class.is-invalid]="hasError(holderGroup.controls.age)"
-                    [attr.aria-invalid]="hasError(holderGroup.controls.age) || null"
-                    aria-describedby="holderAge-error"
-                />
-                @if (hasError(holderGroup.controls.age)) {
-                <div id="holderAge-error" class="invalid-feedback">
-                    @if (holderGroup.controls.age.hasError('required')) {
-                    <span>Age is required.</span>
-                    }
-                    @if (holderGroup.controls.age.hasError('min')) {
-                    <span>Age must be a positive number.</span>
-                    }
-                    @if (holderGroup.controls.age.hasError('max')) {
-                    <span>Age must be 120 or fewer.</span>
-                    }
-                </div>
-                }
-            </div>
-
-            <div class="col-md-6">
-                <label for="holderGender" class="form-label">Gender</label>
-                <select 
-                    id="holderGender" 
-                    formControlName="gender" 
-                    class="form-select" 
-                    [class.is-invalid]="hasError(holderGroup.controls.gender)"
-                    [attr.aria-invalid]="hasError(holderGroup.controls.gender) || null"
-                    aria-describedby="holderGender-error"
-                >
-                    <option [ngValue]="null" disabled>Select gender</option>
-                    @for (option of genderOptions; track option.value) {
-                    <option [ngValue]="option.value">{{ option.label }}</option>
-                    }
-                </select>
-                @if (hasError(holderGroup.controls.gender)) {
-                <div id="holderGender-error" class="invalid-feedback">
-                    @if (holderGroup.controls.gender.hasError('required')) {
-                    <span>Gender is required.</span>
-                    }
-                </div>
-                }
-            </div>
-        </div>
-    </div>
-
-    <div class="d-flex justify-content-end gap-2 pt-4">
-        <button type="submit" class="btn btn-primary" [disabled]="disabled() || policyForm.invalid">
-            @if (disabled()) {
-                <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
-                Saving...
-            } @else {
-                {{ editing() ? 'Save Policy' : 'Create Policy' }}
+            @if (holderGroup.controls.age.hasError('min')) {
+              <span>Age must be a positive number.</span>
             }
-        </button>
-        @if (!editing()) {
-        <button type="button" class="btn btn-secondary" (click)="onFormReset()" [disabled]="policyForm.pristine">
-            Reset
-        </button>
+            @if (holderGroup.controls.age.hasError('max')) {
+              <span>Age must be 120 or fewer.</span>
+            }
+          </div>
         }
-        @if (editing()) {
-        <button type="button" class="btn btn-danger" (click)="onDelete()">
-            Delete Policy
-        </button>
+      </div>
+
+      <div class="col-md-6">
+        <label for="holderGender" class="form-label">Gender</label>
+        <select
+          id="holderGender"
+          formControlName="gender"
+          class="form-select"
+          [class.is-invalid]="hasError(holderGroup.controls.gender)"
+          [attr.aria-invalid]="hasError(holderGroup.controls.gender) || null"
+          aria-describedby="holderGender-error"
+        >
+          <option [ngValue]="null" disabled>Select gender</option>
+          @for (option of genderOptions; track option.value) {
+            <option [ngValue]="option.value">{{ option.label }}</option>
+          }
+        </select>
+        @if (hasError(holderGroup.controls.gender)) {
+          <div id="holderGender-error" class="invalid-feedback">
+            @if (holderGroup.controls.gender.hasError('required')) {
+              <span>Gender is required.</span>
+            }
+          </div>
         }
+      </div>
     </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 pt-4">
+    <button type="submit" class="btn btn-primary" [disabled]="disabled() || policyForm.invalid">
+      @if (disabled()) {
+        <span class="spinner-border spinner-border-sm me-2" aria-hidden="true"></span>
+        Saving...
+      } @else {
+        {{ editing() ? 'Save Policy' : 'Create Policy' }}
+      }
+    </button>
+    @if (!editing()) {
+      <button type="button" class="btn btn-secondary" (click)="onFormReset()" [disabled]="policyForm.pristine">
+        Reset
+      </button>
+    }
+    @if (editing()) {
+      <button type="button" class="btn btn-danger" (click)="onDelete()">
+        Delete Policy
+      </button>
+    }
+  </div>
 </form>
 
 <app-confirm-modal
-    title="Confirm Delete"
-    message="Are you sure you want to delete this policy? This action cannot be undone."
-    confirmLabel="Delete"
-    confirmClass="btn-danger"
-    (confirmed)="confirmDelete()"
+  title="Confirm Delete"
+  message="Are you sure you want to delete this policy? This action cannot be undone."
+  confirmLabel="Delete"
+  confirmClass="btn-danger"
+  (confirmed)="confirmDelete()"
 />
