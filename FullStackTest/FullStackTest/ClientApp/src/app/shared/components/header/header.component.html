@@ -13,7 +13,7 @@
             <a
               [routerLink]="item.path"
               routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: item.path === '/policies' }"
+              [routerLinkActiveOptions]="{ exact: true }"
               class="nav-item">
               <i class="bi" [class]="item.icon"></i>
               <span>{{ item.label }}</span>

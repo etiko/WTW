@@ -4,11 +4,22 @@
   background: $color-white;
   border: 1px solid $color-border-dark;
   border-radius: 0.75rem;
-  padding: 1.25rem;
+  padding: 0;
+  overflow: hidden;
+
+  .card-header {
+    background: $color-text;
+    padding: 1rem 1.25rem;
+    border-bottom: none;
+    border-radius: 0;
+
+    .list-title {
+      color: $color-white;
+    }
+  }
 
   .card-body {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 1.25rem;
   }
 }
 

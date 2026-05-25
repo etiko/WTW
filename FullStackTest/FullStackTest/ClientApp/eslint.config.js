@@ -35,6 +35,7 @@ module.exports = defineConfig([
       "indent": ["error", 2, { "SwitchCase": 1 }],
       "max-len": ["warn", { "code": 140, "ignoreUrls": true, "ignoreStrings": true, "ignoreTemplateLiterals": true }],
       "no-console": "error",
+      "@typescript-eslint/no-empty-function": "off",
       "eol-last": ["error", "always"],
       "curly": ["error", "all"],
     },
