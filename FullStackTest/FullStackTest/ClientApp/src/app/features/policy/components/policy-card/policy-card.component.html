@@ -1,18 +1,26 @@
-<div class="policy-card" 
-  tabindex="0" 
-  [class.policy-card--selected]="isSelected()" 
+<div class="policy-card"
+  tabindex="0"
+  [class.policy-card--selected]="isSelected()"
   (click)="selectedItem.emit()"
   (keydown.enter)="selectedItem.emit()"
   (keydown.space)="selectedItem.emit(); $event.preventDefault()">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <span class="policy-number">#{{ policy().policyNumber }}</span>
+
+  <div class="policy-card__header">
+    <span class="policy-card__number">Policy #{{ policy().policyNumber }}</span>
+    <span class="policy-card__badge">{{ genderLabel() }}</span>
   </div>
-  <h3 class="holder-name">
-    {{ policy().policyHolder.name }} 
-    <span class="separator mx-2"> - </span>
-    <span>{{ genderLabel() }}</span>
-  </h3>
-  <div class="holder-details">
-    <span>{{ policy().policyHolder.age }} years old</span>
+
+  <div class="policy-card__name">{{ policy().policyHolder.name }}</div>
+
+  <hr class="policy-card__divider">
+
+  <div class="policy-card__detail">
+    <span class="policy-card__detail-label">Age</span>
+    <span class="policy-card__detail-value">{{ policy().policyHolder.age }}</span>
+  </div>
+
+  <div class="policy-card__detail">
+    <span class="policy-card__detail-label">Gender</span>
+    <span class="policy-card__detail-value">{{ genderLabel() }}</span>
   </div>
 </div>
