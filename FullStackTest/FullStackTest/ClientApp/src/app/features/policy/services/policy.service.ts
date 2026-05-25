@@ -1,8 +1,7 @@
-import { computed, DestroyRef, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { getApiErrorMessage } from '@shared/utils/api-error.utils';
 
@@ -28,13 +27,13 @@ export class PolicyService {
   error = computed(() => this.state().error);
   submitting = computed(() => this.state().submitting);
 
-  getPolicies(destroyRef: DestroyRef): void {
+  getPolicies(): Observable<Policy[]> {
     this.updateState({ loadingState: 'loading', error: null });
 
-    this.http.get<Policy[]>(this.baseUrl).pipe(
-      takeUntilDestroyed(destroyRef),
-      catchError((error: unknown) => this.handleError(error, 'get policies')))
-      .subscribe((policies: Policy[]) => this.updateState({ policies, loadingState: 'success' }));
+    return this.http.get<Policy[]>(this.baseUrl).pipe(
+      tap((policies: Policy[]) => this.updateState({ policies, loadingState: 'success' })),
+      catchError((error: unknown) => this.handleError(error, 'get policies'))
+    );
   }
 
   getPolicy(policyNumber: number): Observable<Policy> {

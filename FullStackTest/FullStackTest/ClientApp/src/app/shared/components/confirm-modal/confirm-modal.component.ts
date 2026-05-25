@@ -7,14 +7,14 @@ import { Modal } from 'bootstrap';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmModalComponent {
-  title = input('Confirm');
-  message = input('Are you sure?');
-  confirmLabel = input('Confirm');
-  confirmClass = input('btn-danger');
+  readonly title = input('Confirm');
+  readonly message = input('Are you sure?');
+  readonly confirmLabel = input('Confirm');
+  readonly confirmClass = input('btn-danger');
 
-  confirmed = output<void>();
+  readonly confirmed = output<void>();
 
-  private modalRef = viewChild<ElementRef>('confirmModal');
+  private readonly modalRef = viewChild<ElementRef>('confirmModal');
   private modalInstance: Modal | null = null;
 
   show(): void {

@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
+import { POLICY_ROUTES } from '@shared/constants/routes';
 import { PolicyFormPageComponent } from './policy-form-page.component';
 import { PolicyService } from '../../services/policy.service';
 import { Gender } from '../../models/gender.model';
@@ -111,12 +112,13 @@ describe('PolicyFormPageComponent — EDIT mode', () => {
   it('handleDelete calls deletePolicy and navigates to /policies', () => {
     component.handleDelete();
     expect(mockPolicyService.deletePolicy).toHaveBeenCalledWith(1001);
-    expect(navigateSpy).toHaveBeenCalledWith(['/policies']);
+    expect(navigateSpy).toHaveBeenCalledWith([POLICY_ROUTES.ROOT]);
   });
 
   it('handleDelete sets error feedback on failure', () => {
     mockPolicyService.deletePolicy.mockReturnValue(throwError(() => new Error('fail')));
     component.handleDelete();
     expect(component.feedback()?.type).toBe('error');
+    expect(component.feedback()?.message).toBe('Failed to delete policy.');
   });
 });

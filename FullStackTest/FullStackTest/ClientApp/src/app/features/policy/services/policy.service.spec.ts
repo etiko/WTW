@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { DestroyRef } from '@angular/core';
 
 import { PolicyService } from './policy.service';
 import { Policy } from '../models/policy.model';
@@ -11,10 +10,6 @@ const mockPolicy: Policy = {
   policyNumber: 1001,
   policyHolder: { name: 'Alice', age: 30, gender: Gender.Female },
 };
-
-const fakeDestroyRef = {
-  onDestroy: jest.fn().mockReturnValue(() => {}),
-} as unknown as DestroyRef;
 
 describe('PolicyService', () => {
   let service: PolicyService;
@@ -38,7 +33,7 @@ describe('PolicyService', () => {
 
   describe('getPolicies', () => {
     it('sets loadingState to loading then success with policies', () => {
-      service.getPolicies(fakeDestroyRef);
+      service.getPolicies().subscribe();
       expect(service.loadingState()).toBe('loading');
 
       httpMock.expectOne('/api/policy').flush([mockPolicy]);
@@ -48,7 +43,7 @@ describe('PolicyService', () => {
     });
 
     it('sets error state on HTTP failure', () => {
-      service.getPolicies(fakeDestroyRef);
+      service.getPolicies().subscribe({ error: () => {} });
       httpMock.expectOne('/api/policy').flush('error', { status: 500, statusText: 'Server Error' });
 
       expect(service.loadingState()).toBe('error');
@@ -83,7 +78,7 @@ describe('PolicyService', () => {
 
   describe('updatePolicy', () => {
     it('replaces the updated policy in state', () => {
-      service.getPolicies(fakeDestroyRef);
+      service.getPolicies().subscribe();
       httpMock.expectOne('/api/policy').flush([mockPolicy]);
 
       const updated = { ...mockPolicy, policyHolder: { ...mockPolicy.policyHolder, name: 'Alice Updated' } };
@@ -96,7 +91,7 @@ describe('PolicyService', () => {
 
   describe('deletePolicy', () => {
     it('removes the deleted policy from state', () => {
-      service.getPolicies(fakeDestroyRef);
+      service.getPolicies().subscribe();
       httpMock.expectOne('/api/policy').flush([mockPolicy]);
 
       service.deletePolicy(1001).subscribe();

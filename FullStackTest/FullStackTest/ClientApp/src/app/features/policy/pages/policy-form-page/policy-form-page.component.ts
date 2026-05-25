@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { LoadingSpinnerComponent } from '@shared/components/loading-spinner/loading-spinner.component';
 import { ErrorMessageComponent } from '@shared/components/error-message/error-message.component';
+import { POLICY_ROUTES } from '@shared/constants/routes';
 
 import { Policy } from '../../models/policy.model';
 import { PolicyService } from '../../services/policy.service';
@@ -29,7 +30,7 @@ export class PolicyFormPageComponent implements OnInit {
   private router = inject(Router);
   policyService = inject(PolicyService);
 
-  private formFields = viewChild(PolicyFormFieldsComponent);
+  private readonly formFields = viewChild(PolicyFormFieldsComponent);
 
   formMode = signal<FormMode>(FORM_MODES.CREATE);
   loading = signal(false);
@@ -37,7 +38,7 @@ export class PolicyFormPageComponent implements OnInit {
   originalPolicy = signal<Policy | null>(null);
   feedback = signal<Feedback | null>(null);
 
-  policyFormData = computed<PolicyFormData>(() => {
+  readonly policyFormData = computed<PolicyFormData>(() => {
     const policy = this.originalPolicy();
     if (policy) {
       return mapPolicyToFormData(policy);
@@ -45,7 +46,7 @@ export class PolicyFormPageComponent implements OnInit {
     return emptyPolicyFormData();
   });
 
-  pageSubtitle = computed(() =>
+  readonly pageSubtitle = computed(() =>
     this.formMode() === FORM_MODES.EDIT ? 'Update the policy details and save your changes.'
       : 'Fill in the details below to create a new policy.'
   );
@@ -75,7 +76,7 @@ export class PolicyFormPageComponent implements OnInit {
 
     this.policyService.deletePolicy(policyNumber).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: () => this.router.navigate(['/policies']),
+        next: () => this.router.navigate([POLICY_ROUTES.ROOT]),
         error: () => this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to delete policy.' })
       });
   }
@@ -83,10 +84,9 @@ export class PolicyFormPageComponent implements OnInit {
   private createPolicy(formData: PolicyFormData): void {
     this.policyService.createPolicy(formData).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: createdPolicy => {
+        next: () => {
           this.feedback.set({ type: 'success', message: 'Policy created successfully.' });
-          this.originalPolicy.set(createdPolicy);
-          this.formFields()?.onFormReset();
+          this.formFields()?.resetForm();
         },
         error: () => {
           this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to create policy.' });

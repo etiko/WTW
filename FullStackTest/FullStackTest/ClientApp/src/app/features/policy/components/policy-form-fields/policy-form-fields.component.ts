@@ -14,15 +14,15 @@ import { emptyPolicyFormData } from '../../mappers/policy.mapper';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PolicyFormFieldsComponent {
-  initialPolicyFormData = input<PolicyFormData | null>(null);
-  editing = input(false);
-  disabled = input(false);
+  readonly initialPolicyFormData = input<PolicyFormData | null>(null);
+  readonly editing = input(false);
+  readonly disabled = input(false);
+  readonly formSubmit = output<PolicyFormData>();
+  readonly formReset = output<void>();
+  readonly formDelete = output<void>();
   genderOptions = GENDER_OPTIONS;
-  formSubmit = output<PolicyFormData>();
-  formReset = output<void>();
-  formDelete = output<void>();
 
-  private deleteModal = viewChild(ConfirmModalComponent);
+  private readonly deleteModal = viewChild(ConfirmModalComponent);
 
   policyForm = new FormGroup({
     policyNumber: new FormControl<number | null>(null, [Validators.required, Validators.min(1)]),
@@ -39,6 +39,9 @@ export class PolicyFormFieldsComponent {
       if (data) {
         this.policyForm.setValue(data, { emitEvent: false });
       }
+    });
+
+    effect(() => {
       if (this.editing()) {
         this.policyForm.controls.policyNumber.disable();
       } else {
@@ -66,6 +69,11 @@ export class PolicyFormFieldsComponent {
   }
 
   onFormReset(): void {
+    this.resetForm();
+    this.formReset.emit();
+  }
+
+  resetForm(): void {
     this.policyForm.reset(emptyPolicyFormData());
   }
 

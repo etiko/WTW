@@ -24,19 +24,12 @@ describe('PolicyCardComponent', () => {
     fixture.detectChanges();
   });
 
-  it('returns Female label for female gender', () => {
-    expect(component.genderLabel()).toBe('Female');
-  });
-
-  it('returns Male label for male gender', () => {
-    const malePolicy = { ...mockPolicy, policyHolder: { ...mockPolicy.policyHolder, gender: Gender.Male } };
-    fixture.componentRef.setInput('policy', malePolicy);
-    expect(component.genderLabel()).toBe('Male');
-  });
-
-  it('returns Unknown for an unrecognised gender value', () => {
-    const unknownPolicy = { ...mockPolicy, policyHolder: { ...mockPolicy.policyHolder, gender: 99 as Gender } };
-    fixture.componentRef.setInput('policy', unknownPolicy);
-    expect(component.genderLabel()).toBe('Unknown');
+  it.each([
+    [Gender.Female, 'Female'],
+    [Gender.Male, 'Male'],
+    [99 as Gender, 'Unknown'],
+  ])('genderLabel returns %s for gender value %i', (gender, expected) => {
+    fixture.componentRef.setInput('policy', { ...mockPolicy, policyHolder: { ...mockPolicy.policyHolder, gender } });
+    expect(component.genderLabel()).toBe(expected);
   });
 });

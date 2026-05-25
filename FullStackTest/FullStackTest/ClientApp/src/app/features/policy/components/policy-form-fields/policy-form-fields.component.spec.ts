@@ -84,15 +84,12 @@ describe('PolicyFormFieldsComponent', () => {
     expect(emitSpy).toHaveBeenCalled();
   });
 
-  it('policyNumber is disabled when editing input is true', () => {
-    fixture.componentRef.setInput('editing', true);
+  it.each([
+    [true, 'disabled', true],
+    [false, 'enabled', false],
+  ])('policyNumber is %s when editing input is %s', (editing, _label, expectDisabled) => {
+    fixture.componentRef.setInput('editing', editing);
     fixture.detectChanges();
-    expect(component.policyForm.controls.policyNumber.disabled).toBe(true);
-  });
-
-  it('policyNumber is enabled when editing input is false', () => {
-    fixture.componentRef.setInput('editing', false);
-    fixture.detectChanges();
-    expect(component.policyForm.controls.policyNumber.enabled).toBe(true);
+    expect(component.policyForm.controls.policyNumber.disabled).toBe(expectDisabled);
   });
 });

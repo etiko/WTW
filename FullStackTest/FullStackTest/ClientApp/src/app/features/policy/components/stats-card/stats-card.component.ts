@@ -6,7 +6,6 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatsCardComponent {
-  label = input.required<string>();
-  value = input.required<string | number>();
-
+  readonly label = input.required<string>();
+  readonly value = input.required<string | number>();
 }

@@ -9,11 +9,11 @@ import { GENDER_OPTIONS } from '../../models/gender.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PolicyCardComponent {
-  policy = input.required<Policy>();
-  isSelected = input(false);
-  selectedItem = output<void>();
+  readonly policy = input.required<Policy>();
+  readonly isSelected = input(false);
+  readonly selectedItem = output<void>();
 
-  genderLabel = computed(() => {
+  readonly genderLabel = computed(() => {
     const gender = this.policy().policyHolder.gender;
     return GENDER_OPTIONS.find(option => option.value === gender)?.label ?? 'Unknown';
   });

@@ -1,7 +1,9 @@
 import { NO_ERRORS_SCHEMA, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 
+import { POLICY_ROUTES } from '@shared/constants/routes';
 import { PolicyLandingPageComponent } from './policy-landing-page.component';
 import { PolicyService } from '../../services/policy.service';
 import { Gender } from '../../models/gender.model';
@@ -32,7 +34,7 @@ describe('PolicyLandingPageComponent', () => {
             policies: policiesSignal,
             loadingState: signal('success'),
             error: signal(null),
-            getPolicies: jest.fn(),
+            getPolicies: jest.fn().mockReturnValue(of(mockPolicies)),
           },
         },
       ],
@@ -71,6 +73,6 @@ describe('PolicyLandingPageComponent', () => {
 
   it('handlePolicySelected navigates to the edit route for that policy', () => {
     component.handlePolicySelected(mockPolicies[0]);
-    expect(router.navigate).toHaveBeenCalledWith(['/policies/editPolicy/1']);
+    expect(router.navigate).toHaveBeenCalledWith([POLICY_ROUTES.EDIT, 1]);
   });
 });

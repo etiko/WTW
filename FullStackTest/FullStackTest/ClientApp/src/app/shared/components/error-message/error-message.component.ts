@@ -6,5 +6,5 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ErrorMessageComponent {
-  message = input.required<string>();
+  readonly message = input.required<string>();
 }

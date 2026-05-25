@@ -3,7 +3,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { NavItem } from '../models/nav-item.model';
 
-
 @Component({
   selector: 'app-header',
   imports: [RouterLink, RouterLinkActive],

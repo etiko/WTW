@@ -5,6 +5,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './loading-spinner.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoadingSpinnerComponent {
-
-}
+export class LoadingSpinnerComponent {}
