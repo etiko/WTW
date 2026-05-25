@@ -1,5 +1,9 @@
 ﻿Add your notes here:
 
+Git Commit Authorship — Note for Reviewers
+commits on the feature/policies-management branch display two identities: etiko as author and toyinetiko-wtg as committer. Both accounts belong to me — Toyin Etiko.
+my machine's global Git configuration had my personal email (etiko.toyin@gmail.com) set as the author identity, while my work email (toyin.etiko@wisetechglobal.com) was pickedup as the committer identity — likely from a workplace credential stored in Windows.
+
 - I installed Bootstrap and migrated the application styling to SCSS so the styles can be configured and extended more easily. This is also my preferred styling approach.
 - I created a shared directory for generic, reusable items such as the header and loading spinner, error messsage, no result component.
 - I chose to display policies using cards for a cleaner and simpler presentation. A table would also be a valid option, especially where users need to compare records quickly.
