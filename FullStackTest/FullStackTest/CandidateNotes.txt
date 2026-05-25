@@ -4,13 +4,19 @@ Git Commit Authorship — Note for Reviewers
 commits on the feature/policies-management branch display two identities: etiko as author and toyinetiko-wtg as committer. Both accounts belong to me — Toyin Etiko.
 my machine's global Git configuration had my personal email (etiko.toyin@gmail.com) set as the author identity, while my work email (toyin.etiko@wisetechglobal.com) was pickedup as the committer identity — likely from a workplace credential stored in Windows.
 
-- I installed Bootstrap and migrated the application styling to SCSS so the styles can be configured and extended more easily. This is also my preferred styling approach.
-- I created a shared directory for generic, reusable items such as the header and loading spinner, error messsage, no result component.
-- I chose to display policies using cards for a cleaner and simpler presentation. A table would also be a valid option, especially where users need to compare records quickly.
-- In a larger application, either cards or tables could work depending on the use case. However, from a performance perspective, the application would need server-side pagination, lazy loading, or virtual scrolling as the data volume grows.
+What I Implemented
+- I installed Bootstrap and migrated the application styling to SCSS so styles can be configured, maintained, and extended easily. This is also my preferred styling approach.
+- I created a shared directory for generic, reusable components such as the header, loading spinner, error message, and no-results component.
+- I chose to display policies using cards for a cleaner and simpler presentation. A table would also be a valid option, particularly where users need to compare records quickly.
 - I kept the API model separate from the form model because the form has different validation and empty-state requirements.
-- Given the time constraints and small application scope, I kept the policy form fields in a single feature-specific component to avoid unnecessary abstraction. In a larger application, reusable form controls could be extracted into shared
- components where there is clear cross-feature reuse.
-- The backend should generate the policy number and return it to the frontend. This keeps policy number generation consistent, avoids duplication of business rules on the client, and prevents potential conflicts.
-- I used AI as part of the development process to support code reviews, accelerate bug fixing.
+- Given the time constraints and small application scope, I kept the policy form fields within a single feature-specific component to avoid unnecessary abstraction. In a larger application,
+ reusable form controls could be extracted into shared components where there is clear cross-feature reuse.
+- I used AI as part of the development process to support code reviews, accelerate bug fixing, assist with unit test creation, and perform accessibility checks such as validating color contrast.
+- I removed test files from components with no business logic to reduce unnecessary noise and boilerplate within the application.
+- I implemented accessibility features such as skip links, keyboard navigation support throughout the application, and ensured all form inputs have corresponding labels for improved accessibility and screen reader support.
+- I replaced Karma and Jasmine with Jest to provide a faster, simpler, and more modern unit testing experience.
+
+Improvements / Enhancements Given More Time
+- In a larger application, either cards or tables could be appropriate depending on the user experience requirements. However, as data volume grows, the application would benefit from server-side pagination, lazy loading, or virtual scrolling for improved performance and scalability.
+- The backend should generate the policy number and return it to the frontend. This would ensure consistency, avoid duplication of business rules on the client, and prevent potential conflicts.
 - Given more time, I would add E2E tests to validate the full user journey across the CRUD flow, including creating, viewing, editing, and deleting a policy.
