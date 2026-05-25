@@ -7,3 +7,6 @@
 - I kept the API model separate from the form model because the form has different validation and empty-state requirements.
 - Given the time constraints and small application scope, I kept the policy form fields in a single feature-specific component to avoid unnecessary abstraction. In a larger application, reusable form controls could be extracted into shared
  components where there is clear cross-feature reuse.
+- The backend should generate the policy number and return it to the frontend. This keeps policy number generation consistent, avoids duplication of business rules on the client, and prevents potential conflicts.
+- I used AI as part of the development process to support code reviews, accelerate bug fixing.
+- Given more time, I would add E2E tests to validate the full user journey across the CRUD flow, including creating, viewing, editing, and deleting a policy.

@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, output, viewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Modal } from 'bootstrap';
 
 import { ConfirmModalComponent } from '@shared/components/confirm-modal/confirm-modal.component';
 
@@ -40,9 +39,11 @@ export class PolicyFormFieldsComponent {
       if (data) {
         this.policyForm.setValue(data, { emitEvent: false });
       }
-      this.editing()
-        ? this.policyForm.controls.policyNumber.disable()
-        : this.policyForm.controls.policyNumber.enable();
+      if (this.editing()) {
+        this.policyForm.controls.policyNumber.disable();
+      } else {
+        this.policyForm.controls.policyNumber.enable();
+      }
     });
   }
 

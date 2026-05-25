@@ -10,7 +10,7 @@ describe('PolicyFormFieldsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [PolicyFormFieldsComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PolicyFormFieldsComponent);
     component = fixture.componentInstance;

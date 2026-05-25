@@ -56,7 +56,11 @@ export class PolicyFormPageComponent implements OnInit {
 
   handleSubmit(formData: PolicyFormData): void {
     this.feedback.set(null);
-    this.formMode() === FORM_MODES.CREATE ? this.createPolicy(formData) : this.updatePolicy(formData);
+    if (this.formMode() === FORM_MODES.CREATE) {
+      this.createPolicy(formData);
+    } else {
+      this.updatePolicy(formData);
+    }
   }
 
   handleReset(): void {
@@ -121,16 +125,16 @@ export class PolicyFormPageComponent implements OnInit {
     this.loading.set(true);
 
     this.policyService.getPolicy(policyNumber).pipe(takeUntilDestroyed(this.destroyRef))
-    .subscribe({
-      next: policy => {
-        this.originalPolicy.set(policy);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.notFound.set(true);
-        this.loading.set(false);
-      }
-    });
+      .subscribe({
+        next: policy => {
+          this.originalPolicy.set(policy);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.notFound.set(true);
+          this.loading.set(false);
+        }
+      });
   }
 
 }

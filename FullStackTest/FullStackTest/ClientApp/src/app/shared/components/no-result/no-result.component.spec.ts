@@ -10,7 +10,7 @@ describe('NoResultComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NoResultComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(NoResultComponent);
     component = fixture.componentInstance;

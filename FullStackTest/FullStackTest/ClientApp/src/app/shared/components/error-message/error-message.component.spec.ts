@@ -10,7 +10,7 @@ describe('ErrorMessageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ErrorMessageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ErrorMessageComponent);
     component = fixture.componentInstance;
