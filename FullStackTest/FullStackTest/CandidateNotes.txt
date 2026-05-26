@@ -13,7 +13,7 @@ What I Implemented
  However, for a larger and more complex workflow with shared cross-feature state, NgRx or a similar state management solution would become more appropriate.
 - Given the time constraints and small application scope, I kept the policy form fields within a single feature-specific component to avoid unnecessary abstraction. In a larger application,
  reusable form controls could be extracted into shared components where there is clear cross-feature reuse.
-- I used AI as part of the development process to support code reviews, accelerate bug fixing, assist with unit test creation, and perform accessibility checks such as validating color contrast.
+- I used AI as part of the development process to support code reviews, accelerate bug fixingin FE and BE, assist with unit test creation, and perform accessibility checks such as validating color contrast.
 - I removed test files from components with no business logic to reduce unnecessary noise and boilerplate within the application.
 - I implemented accessibility features such as skip links, keyboard navigation support throughout the application, and ensured all form inputs have corresponding labels for improved accessibility and screen reader support.
 - I replaced Karma and Jasmine with Jest to provide a faster, simpler, and more modern unit testing experience.
@@ -24,3 +24,5 @@ Improvements / Enhancements Given More Time
 - In a larger application, either cards or tables could be appropriate depending on the user experience requirements. However, as data volume grows, the application would benefit from server-side pagination, lazy loading, or virtual scrolling for improved performance and scalability.
 - The backend should generate the policy number and return it to the frontend. This would ensure consistency, avoid duplication of business rules on the client, and prevent potential conflicts.
 - Given more time, I would add E2E tests to validate the full user journey across the CRUD flow, including creating, viewing, editing, and deleting a policy.
+- Given more time, I would add search functionality to make it easier for users to find a specific policy.
+- I would also make the statistics cards interactive, allowing users to filter the policy list by selecting a relevant stat, such as total policies, female holders, or male holders.
