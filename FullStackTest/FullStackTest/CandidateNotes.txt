@@ -24,5 +24,5 @@ Improvements / Enhancements Given More Time
 - In a larger application, either cards or tables could be appropriate depending on the user experience requirements. However, as data volume grows, the application would benefit from server-side pagination, lazy loading, or virtual scrolling for improved performance and scalability.
 - The backend should generate the policy number and return it to the frontend. This would ensure consistency, avoid duplication of business rules on the client, and prevent potential conflicts.
 - Given more time, I would add E2E tests to validate the full user journey across the CRUD flow, including creating, viewing, editing, and deleting a policy.
-- Given more time, I would add search functionality to make it easier for users to find a specific policy.
-- I would also make the statistics cards interactive, allowing users to filter the policy list by selecting a relevant stat, such as total policies, female holders, or male holders.
+- Given more time, I would add search and filtering capabilities to make it easier for users to find specific policies. 
+I would also make the statistics cards interactive so users can filter policies directly from the dashboard, and persist user filter preferences so users can continue where they left off when returning to the application.
