@@ -15,10 +15,60 @@ public class PolicyController : ControllerBase
     }
 
 
-    //TODO add methods to get/create/update/delete data from _repository
     [HttpGet]
     public IEnumerable<Policy> Get()
     {
         return _policyRepository.Get();
+    }
+
+    [HttpGet("{policyNumber}")]
+    public ActionResult<Policy> GetByPolicyNumber(int policyNumber)
+    {
+        var policy = _policyRepository.GetByPolicyNumber(policyNumber);
+        if (policy is null)
+        {
+            return NotFound();
+        }
+        return Ok(policy);
+    }
+
+    [HttpPost]
+    public ActionResult<Policy> Create([FromBody] Policy policy)
+    {
+        if (_policyRepository.GetByPolicyNumber(policy.PolicyNumber) is not null)
+        {
+            return Conflict($"A policy with number {policy.PolicyNumber} already exists.");
+        }
+
+        _policyRepository.Add(policy);
+
+        return CreatedAtAction(nameof(GetByPolicyNumber), new { policyNumber = policy.PolicyNumber }, policy);
+    }
+
+    [HttpPut("{policyNumber}")]
+    public ActionResult<Policy> Update(int policyNumber, [FromBody] Policy policy)
+    {
+        if (_policyRepository.GetByPolicyNumber(policyNumber) is null)
+        {
+            return NotFound();
+        }
+
+        policy.PolicyNumber = policyNumber;
+        _policyRepository.Update(policy);
+
+        return Ok(policy);
+    }
+
+    [HttpDelete("{policyNumber}")]
+    public IActionResult Delete(int policyNumber)
+    {
+        if (_policyRepository.GetByPolicyNumber(policyNumber) is null)
+        {
+            return NotFound();
+        }
+
+        _policyRepository.Remove(policyNumber);
+
+        return NoContent();
     }
 }

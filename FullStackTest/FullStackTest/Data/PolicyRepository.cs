@@ -51,6 +51,11 @@ public class PolicyRepository : IPolicyRepository
         return _policies;
     }
 
+    public Policy? GetByPolicyNumber(int policyNumber)
+    {
+        return _policies.SingleOrDefault(p => p.PolicyNumber == policyNumber);
+    }
+
     public void Add(Policy policy)
     {
         _policies.Add(policy);

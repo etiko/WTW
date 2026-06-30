@@ -1,0 +1,41 @@
+<div class="row align-items-start mb-4">
+  <div class="col">
+    <h1 class="page-title">Policy Administration</h1>
+    <p class="page-subtitle mb-0">{{ pageSubtitle() }}</p>
+  </div>
+  <div class="col-auto">
+    <a [routerLink]="'/' + POLICY_ROUTES.ROOT" class="btn btn--tertiary">
+      <i class="bi bi-arrow-left"></i>
+      Back to Policies
+    </a>
+  </div>
+</div>
+
+@if (feedback(); as fb) {
+  <div
+    class="alert"
+    [class.alert-success]="fb.type === 'success'"
+    [class.alert-danger]="fb.type === 'error'"
+    role="status"
+    aria-live="polite">
+    {{ fb.message }}
+  </div>
+}
+
+@if (loading()) {
+  <app-loading-spinner />
+} @else if (notFound()) {
+  <app-error-message message="Policy not found. It may have been deleted." />
+  <a [routerLink]="'/' + POLICY_ROUTES.ROOT" class="btn btn--secondary mt-3">
+    Return to Policies
+  </a>
+} @else {
+  <app-policy-form-fields
+    [initialPolicyFormData]="policyFormData()"
+    [editing]="formMode() === 'edit'"
+    [disabled]="submitting()"
+    (formSubmit)="handleSubmit($event)"
+    (formReset)="handleReset()"
+    (formDelete)="handleDelete()" />
+}
+

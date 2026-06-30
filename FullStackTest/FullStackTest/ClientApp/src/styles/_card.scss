@@ -1,0 +1,124 @@
+@use 'variables' as *;
+
+.card {
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+  padding: 0;
+  overflow: hidden;
+
+  .card-header {
+    background: $color-text;
+    padding: 1rem 1.25rem;
+    border-bottom: none;
+    border-radius: 0;
+
+    .list-title {
+      color: $color-white;
+    }
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem;
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+
+  .stat-label {
+    font-size: 0.875rem;
+    color: $color-muted;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+}
+
+.policy-card {
+  display: block;
+  padding: 1.25rem;
+  background: $color-white;
+  border: 1px solid $color-border-dark;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: $color-primary;
+    box-shadow: 0 4px 12px $color-primary-shadow;
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  &--selected {
+    border-color: $color-primary;
+    background: $color-primary-bg;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &__badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: $color-muted;
+    background: $color-secondary-bg;
+    border-radius: 2rem;
+    padding: 0.2rem 0.75rem;
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0.75rem;
+  }
+
+  &__divider {
+    border-color: $color-border;
+    margin: 0 0 0.75rem;
+    opacity: 1;
+  }
+
+  &__detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: $color-muted;
+
+    + .policy-card__detail {
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__detail-label {
+    color: $color-muted;
+  }
+
+  &__detail-value {
+    font-weight: 600;
+    color: $color-text;
+  }
+}
