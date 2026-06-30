@@ -27,11 +27,12 @@ import { Gender } from '../../models/gender.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolicyLandingPageComponent implements OnInit {
-  private destroyRef = inject(DestroyRef);
-  private policyService = inject(PolicyService);
-  private router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly policyService = inject(PolicyService);
+  private readonly router = inject(Router);
 
-  selectedId = signal<number | null>(null);
+  readonly selectedId = signal<number | null>(null);
+  readonly POLICY_ROUTES = POLICY_ROUTES;
 
   readonly policies = this.policyService.policies;
   readonly loadingState = this.policyService.loadingState;

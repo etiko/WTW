@@ -25,18 +25,20 @@ import { Feedback, FORM_MODES, FormMode, PolicyFormData } from '../../models/for
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PolicyFormPageComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
-  private router = inject(Router);
-  policyService = inject(PolicyService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly router = inject(Router);
+  private readonly policyService = inject(PolicyService);
 
   private readonly formFields = viewChild(PolicyFormFieldsComponent);
 
-  formMode = signal<FormMode>(FORM_MODES.CREATE);
-  loading = signal(false);
-  notFound = signal(false);
-  originalPolicy = signal<Policy | null>(null);
-  feedback = signal<Feedback | null>(null);
+  readonly formMode = signal<FormMode>(FORM_MODES.CREATE);
+  readonly loading = signal(false);
+  readonly notFound = signal(false);
+  readonly originalPolicy = signal<Policy | null>(null);
+  readonly feedback = signal<Feedback | null>(null);
+  readonly submitting = this.policyService.submitting;
+  readonly serviceError = this.policyService.error;
 
   readonly policyFormData = computed<PolicyFormData>(() => {
     const policy = this.originalPolicy();
@@ -45,6 +47,8 @@ export class PolicyFormPageComponent implements OnInit {
     }
     return emptyPolicyFormData();
   });
+
+  readonly POLICY_ROUTES = POLICY_ROUTES;
 
   readonly pageSubtitle = computed(() =>
     this.formMode() === FORM_MODES.EDIT ? 'Update the policy details and save your changes.'
@@ -77,7 +81,7 @@ export class PolicyFormPageComponent implements OnInit {
     this.policyService.deletePolicy(policyNumber).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => this.router.navigate([POLICY_ROUTES.ROOT]),
-        error: () => this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to delete policy.' })
+        error: () => this.feedback.set({ type: 'error', message: this.serviceError() ?? 'Failed to delete policy.' })
       });
   }
 
@@ -89,7 +93,7 @@ export class PolicyFormPageComponent implements OnInit {
           this.formFields()?.resetForm();
         },
         error: () => {
-          this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to create policy.' });
+          this.feedback.set({ type: 'error', message: this.serviceError() ?? 'Failed to create policy.' });
         }
       });
   }
@@ -105,7 +109,7 @@ export class PolicyFormPageComponent implements OnInit {
           this.originalPolicy.set(updatedPolicy);
         },
         error: () => {
-          this.feedback.set({ type: 'error', message: this.policyService.error() ?? 'Failed to update policy.' });
+          this.feedback.set({ type: 'error', message: this.serviceError() ?? 'Failed to update policy.' });
         }
       });
   }

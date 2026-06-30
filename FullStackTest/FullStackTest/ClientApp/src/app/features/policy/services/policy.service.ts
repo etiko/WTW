@@ -1,7 +1,7 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { getApiErrorMessage } from '@shared/utils/api-error.utils';
 
@@ -22,17 +22,17 @@ export class PolicyService {
     submitting: false
   });
 
-  policies = computed(() => this.state().policies);
-  loadingState = computed(() => this.state().loadingState);
-  error = computed(() => this.state().error);
-  submitting = computed(() => this.state().submitting);
+  readonly policies = computed(() => this.state().policies);
+  readonly loadingState = computed(() => this.state().loadingState);
+  readonly error = computed(() => this.state().error);
+  readonly submitting = computed(() => this.state().submitting);
 
   getPolicies(): Observable<Policy[]> {
     this.updateState({ loadingState: 'loading', error: null });
 
     return this.http.get<Policy[]>(this.baseUrl).pipe(
       tap((policies: Policy[]) => this.updateState({ policies, loadingState: 'success' })),
-      catchError((error: unknown) => this.handleError(error, 'get policies'))
+      catchError((error: unknown) => this.handleError(error, 'get policies', true))
     );
   }
 
@@ -50,7 +50,8 @@ export class PolicyService {
         const policies = [...this.state().policies, savedPolicy];
         this.updateState({ policies, submitting: false });
       }),
-      catchError((error: unknown) => this.handleError(error, 'create policy'))
+      catchError((error: unknown) => this.handleError(error, 'create policy')),
+      finalize(() => this.updateState({ submitting: false }))
     );
   }
 
@@ -62,7 +63,8 @@ export class PolicyService {
         const policies = this.state().policies.map(policy => policy.policyNumber === policyNumber ? savedPolicy : policy);
         this.updateState({ policies, submitting: false });
       }),
-      catchError((error: unknown) => this.handleError(error, 'update policy'))
+      catchError((error: unknown) => this.handleError(error, 'update policy')),
+      finalize(() => this.updateState({ submitting: false }))
     );
   }
 
@@ -74,13 +76,16 @@ export class PolicyService {
         const policies = this.state().policies.filter(p => p.policyNumber !== policyNumber);
         this.updateState({ policies, submitting: false });
       }),
-      catchError((error: unknown) => this.handleError(error, 'delete policy'))
+      catchError((error: unknown) => this.handleError(error, 'delete policy')),
+      finalize(() => this.updateState({ submitting: false }))
     );
   }
 
-  private handleError(error: unknown, action: string): Observable<never> {
+  private handleError(error: unknown, action: string, isListOperation = false): Observable<never> {
     const message = getApiErrorMessage(error, `Unable to ${action}. Please try again later.`);
-    this.updateState({ error: message, loadingState: 'error', submitting: false });
+    const update: Partial<PolicyState> = { error: message, submitting: false };
+    if (isListOperation) update.loadingState = 'error';
+    this.updateState(update);
     return throwError(() => error);
   }
 

@@ -4,7 +4,7 @@
     <p class="page-subtitle mb-2">Manage insurance policies and holder information</p>
   </div>
   <div class="col-auto">
-    <a routerLink="/policies/createPolicy" class="btn btn--primary">
+    <a [routerLink]="'/' + POLICY_ROUTES.CREATE" class="btn btn--primary">
       <i class="bi bi-plus-lg"></i>
       New Policy
     </a>
@@ -45,9 +45,9 @@
     } @else if (policies().length === 0) {
       <app-no-result />
     } @else {
-      <div class="row g-3" role="listbox" aria-label="Policy list">
+      <div class="row g-3" role="list" aria-label="Policy list">
         @for (policy of policies(); track policy.policyNumber) {
-          <div class="col-md-4">
+          <div class="col-md-4" role="listitem">
             <app-policy-card
               [policy]="policy"
               [isSelected]="selectedId() === policy.policyNumber"
