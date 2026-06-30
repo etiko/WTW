@@ -62,6 +62,3 @@ The data classes are already provided for you within "Data/".
 2. You may use existing CSS/frameworks to create a professional looking front end.
 3. Showcase any industry best practices you deem relevant to support your submission.
 4. In the event you do not have enough time to implement some of the changes you wish to showcase, please provide a summary of enhancements/improvements in the CandidateNotes.txt provided in the project.
-
-## Copyright
-© 2026 WTW. All rights reserved. Proprietary and Confidential. For WTW employees and candidates only.
